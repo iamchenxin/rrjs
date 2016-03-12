@@ -1,0 +1,6 @@
+{
+  "ambientDependencies": {
+    "node": "registry:dt/node#4.0.0+20160311162451",
+    "react-global": "registry:dt/react-global#0.14.0+20151105120114"
+  }
+}
