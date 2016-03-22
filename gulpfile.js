@@ -37,7 +37,10 @@ function stdGulpTrans(src, dst) {
   return gulp
     .src(srcPath)
     .pipe(sourcemaps.init())
-    .pipe(babel({'presets': ['es2015','stage-0']}) )
+    .pipe(babel({
+      'presets': ['es2015','stage-0'],
+      'plugins': ['transform-flow-strip-types']
+    }) )
     .pipe(sourcemaps.write('.',{
       includeContent: true, sourceRoot: sourceRoot,debug:true
     }))
@@ -45,38 +48,15 @@ function stdGulpTrans(src, dst) {
 }
 
 var webpack=require('webpack');
-var webCompiler=webpack({
-  entry:'./src/client/web.jsx',
-  output:{
-    path:path.join(__dirname,'dst/client'),
-    filename:'web.js'
-  },
-  devtool:'source-map',
-  module:{
-    loaders:[
-      {
-        loader:'babel-loader',
-        test:/\.jsx$/,
-        exclude:/node_modules/,
-        query:{
-          presets:[ 'es2015', 'stage-0', 'react']
-        }
-      }
-    ]
-  }
-  /*
-  externals: {
-      "react-relay": "Relay"
-  }
-  */
-});
+var webpackConfig = require('./webpack.config.js');
+var webCompiler=webpack(webpackConfig);
 
 function webWebpackRun(){
   gutil.log('[webpack]', 'compile client ...');
   webCompiler.run(function (err,stats) {
     if(err) throw new gutil.PluginError('[webpack]', err);
     gutil.log('[webpack]', stats.toString());
-  });  
+  });
 }
 
 function webWebpackWatch(){

@@ -1,0 +1,8 @@
+[ignore]
+.*/dst/.*
+.*/node_modules/.*
+[include]
+
+[libs]
+interfaces
+[options]

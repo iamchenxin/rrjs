@@ -10,7 +10,6 @@ import path from 'path';
 
 function run(port){
   let server=express();
-
   let staticPath = path.resolve(__dirname,"../client");
   console.log(staticPath);
   server.use('/',express.static(staticPath));
